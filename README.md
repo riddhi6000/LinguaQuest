@@ -1,2 +1,2 @@
 # LinguaQuest
-TechRush Hackathon Project
+TechRush Hackathon Project.
