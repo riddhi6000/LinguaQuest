@@ -1,0 +1,137 @@
+/* fonts */
+@import url('https://fonts.googleapis.com/css2?family=Jersey+15&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* background image */
+body {
+    background-image: url('background.png');
+    background-size: cover;
+    position: relative;
+    min-height: 100vh;
+    margin: 0;
+    background-position: center;
+    position: relative;
+}
+
+/* translucent overlay on background for improved text readability */
+body::before {
+    content: "";
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 0;
+}
+
+/* ensures that all elements of body are on top of the overlay */
+body > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* navbar */
+nav {
+    background-color: white;
+    padding: 5px 20px ;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
+}
+.logo {
+    height: 45px;
+}
+.navelements {
+    margin: 7px;
+    text-decoration: none;
+    color: black;
+}
+.icon {
+    font-family: "Jersey 15", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 30px;
+}
+.left, .right {
+    display: flex;
+    align-items: center;
+}
+.right {
+    gap: 20px;
+}
+
+/* other front page elements */
+.front-page-img {
+    height: 525px;
+    transform: scaleX(-1);
+    float: right;
+    margin: auto 10px;
+}
+.main-content {
+    position: relative;
+}
+.welcome {
+    position: absolute;
+    top: 75px;
+    left: 25px;
+    width: 800px;
+    background: linear-gradient(to right, orange, rgb(233, 101, 123));
+    border-radius: 7px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 45px;
+}
+.welcome-text {
+    margin: 10px;
+    margin-bottom: 0;
+    padding-left: 15px;
+}
+.intro-text{
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 20px;
+    padding-left: 25px;
+    margin-top: 0;
+}
+.additional-text {
+    position: absolute;
+    top: 225px;
+    left: 25px;
+    padding-left: 23px;
+    width: 550px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 17px;
+    color: black;
+    line-height: 2;
+    text-shadow: 1px 1px 15px;
+}
+.start-button {
+    text-align: center;
+    position: relative;
+    top: 400px;
+}
+.start {
+    padding: 13px;
+    background: linear-gradient(to right, rgb(233, 101, 123), orange);
+    border-radius: 17px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 23px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+button:hover {
+    transform: scale(1.025);
+}
+button:active {
+    transform: scale(0.97);
+}
