@@ -3,7 +3,7 @@
 
 /* background image */
 body {
-    background-image: url('background.png');
+    background-image: url('images/background.png');
     background-size: cover;
     position: relative;
     min-height: 100vh;
@@ -177,4 +177,25 @@ a {
 .country {
     display: flex;
     justify-content: space-between;
+}
+
+/* -------------------------------------------------------------------------------------------------------------- */
+
+.mcq-options {
+  margin: 5px;
+  padding: 8px 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #eee;
+  transition: background-color 0.3s ease;
+}
+
+.correct {
+  background-color: #a6f1a6 !important; /* light green */
+}
+
+.wrong {
+  background-color: #f6a6a6 !important; /* light red */
 }
