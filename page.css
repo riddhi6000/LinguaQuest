@@ -1,0 +1,75 @@
+/* fonts */
+@import url('https://fonts.googleapis.com/css2?family=Jersey+15&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+body{
+    background-image: url('background.png');
+    background-size:cover;
+    position: relative;
+    min-height: 100vh;
+    margin:0;
+    background-position: center;
+    position: relative;
+}
+/*translucent overlay on background for improved text readability*/
+body::before{
+    content:"";
+    position:fixed;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.4);
+    z-index:0;
+} 
+/*ensures that all elements of body are on top of the overlay*/
+body>*{
+    position:relative;
+    z-index:1;
+}
+.content{
+    display:flex;
+    align-items: center;
+    justify-content:left;
+    gap:10 px;
+    
+    position:relative;
+    z-index:1;
+    padding:20px;
+    color:white;
+    text-align: center;
+    flex-wrap: wrap;
+}
+/* .content img{
+    width:300px;
+    height:300px;
+    position:center;
+    background:none
+    top:10%;
+    left:50%;
+    right:50%
+} */
+
+/* change language button */
+.change{
+    position:absolute;
+    height:30px;
+    width:150px;
+    margin: -170px 1170px;
+    cursor:pointer; 
+    text-align: center;
+    font-family:"Poppins", sans-serif;
+    background-color: beige;
+    background: linear-gradient(to right, orange, rgb(233, 101, 123));
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    border:3px;
+} 
+.change:hover{
+  transform:scale(1.02);
+}
+.lottie-container {
+  width: 150px;
+  height: 150px;
+  display: inline-block;
+  vertical-align: baseline;
+  margin-right: 15px;
+}
+#book-animation {
+  transform: translateY(-4px); /* move up a little */
+}
