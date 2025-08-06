@@ -1,12 +1,145 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spanish Lessons</title>
+    <meta charset="UTF-8" />
+    <title>LESSONS PAGE</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lottie-web@5.7.4/build/player/lottie.min.js"></script>
+
+    <style>
+        h1{
+            background:none ;
+            background-color:transparent;
+            font-family:"Poppins", sans-serif;
+            font-weight: 400;
+            font-style:normal;
+            font-size:50px;
+            color:black;
+            text-align: left;
+            position: relative;
+            padding:0px 0px 0px 20px;
+        }
+        .container{
+            display:flex;
+            flex-wrap: wrap;
+            padding: 50px;
+            gap:50px;
+             
+            
+        }
+        .card{
+            background-color: #790404;
+            /* display:flex; */
+            height:300px;
+            width:300px; 
+            
+            border:2px solid #690202;
+            border-radius:5px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3) ;
+            text-align: center ;
+            justify-content: center;
+            color: #FFF5E1;
+            transition: transform 0.3s ease;
+            justify-items:center;
+            position:relative;
+
+        
+        }
+        .card:hover{
+            transform:scale(1.03);
+        }
+        .lesson_image1{
+           width: 150px;
+           height: 150px;
+           object-fit: contain;
+           
+          
+        }
+        .lesson_image2{
+            width:170px;
+            height:170px;
+            object-fit:contain;
+            
+        }
+        .lesson-text h2 {
+            padding:5px;
+            margin: 0;
+            text-align: center;
+            font-size:xx-large;
+        }
+
+        .lesson-text p {
+            padding:auto;
+            margin-left:8px;
+            margin-top: -2px;
+            font-size: x-large;
+}
+        .cardbutton{
+            border-radius: 3px;
+            border:2px;
+            margin-top:270px;
+            position:absolute;
+            bottom:10px;
+            left:20%;
+            align-self:center;
+            height:30px;
+            width:200px;
+            cursor:pointer;
+            text-align:center;
+            font-size: large;
+            font-family:"Poppins", sans-serif;
+            
+        }
+        .cardbutton:hover{
+            transform:scale(1.03);
+        }
+    </style>
 </head>
 <body>
+    <div class="content">
+        <div class="lottie-container" id="bookLottie"></div>
+        <h1><b>Let the learning journey begin!</b></h1>
+        
+        
+    </div>
+    <script>
+    lottie.loadAnimation({
+        container: document.getElementById('bookLottie'),
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: 'flip.json' // 
+    });
+    </script>
     
+    <a href="select-lang.html">
+        <button class="change">Change Language</button>
+    </a>
+    
+    <div class="container">
+        <div class="card">
+            
+            <div class="lesson-text">
+                <h2>LESSON 1</h2>
+                <p>Basic Greetings</p>
+            </div>
+            <img src="images/greetings.jpeg" alt="greeting image" class="lesson_image1">
+        
+            
+            <a href="lesson1.html"><button class="cardbutton"><b>START</b></button></a>
+        </div>   
+            
+        <div class="card">
+           
+            <div class="lesson-text">
+            <h2>LESSON 2</h2>
+            <p>Order in a Cafe</p>
+            </div>
+             <img src="images/cafe.jpeg" alt="cafe" class="lesson_image2">
+            <a href="lesson2.html"><button class="cardbutton"><b>START</b></button></a>
+        </div>
+        
+    </div>
 </body>
 </html>
