@@ -135,6 +135,49 @@ button:hover {
 button:active {
     transform: scale(0.97);
 }
+
+/* -------------------------------------------------------------------------------------------------------------- */
+
+.select-lang {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 40px;
+}
+.container1 {
+    padding: 25px;
+    padding-left: 35px;
+}
+.lang {
+    display: inline-block;
+    background-color: rgb(200, 200, 200);
+    border: 2px solid rgb(50, 50, 50);
+    border-radius: 5px;
+    margin: 25px;
+    padding: 25px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 25px;
+    text-align: center;
+    transition: background-color 0.25s ease;
+
+}
+.lang > img {
+    height: 100px;
+    border: 2px solid black;
+}
+.lang:hover {
+    background-color: rgb(170, 170, 170);
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+.country {
+    display: flex;
+    justify-content: space-between;
+}
 /* -------------------------------------------------------------------------------------------------------------- */
 .content{
     display:flex;
@@ -178,43 +221,21 @@ button:active {
 }
 /* -------------------------------------------------------------------------------------------------------------- */
 
-.select-lang {
-    font-family: "Poppins", sans-serif;
-    font-weight: 500;
-    font-style: normal;
-    font-size: 40px;
+.mcq-options {
+  margin: 5px;
+  padding: 8px 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #eee;
+  transition: background-color 0.3s ease;
 }
-.container1 {
-    padding: 25px;
-    padding-left: 35px;
-}
-.lang {
-    display: inline-block;
-    background-color: rgb(200, 200, 200);
-    border: 2px solid rgb(50, 50, 50);
-    border-radius: 5px;
-    margin: 25px;
-    padding: 25px;
-    font-family: "Poppins", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 25px;
-    text-align: center;
-    transition: background-color 0.25s ease;
 
+.correct {
+  background-color: #a6f1a6 !important; /* light green */
 }
-.lang > img {
-    height: 100px;
-    border: 2px solid black;
-}
-.lang:hover {
-    background-color: rgb(170, 170, 170);
-}
-a {
-    text-decoration: none;
-    color: inherit;
-}
-.country {
-    display: flex;
-    justify-content: space-between;
+
+.wrong {
+  background-color: #f6a6a6 !important; /* light red */
 }
