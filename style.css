@@ -15,7 +15,9 @@ body {
 /* translucent overlay on background for improved text readability */
 body::before {
     content: "";
-    position: fixed;
+    position: fixed; 
+    top: 0;
+    left: 0;
     height: 100%;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.4);
@@ -129,10 +131,10 @@ nav {
     cursor: pointer;
     transition: all 0.25s ease;
 }
-button:hover {
+.start:hover {
     transform: scale(1.025);
 }
-button:active {
+.start:active {
     transform: scale(0.97);
 }
 
@@ -181,21 +183,155 @@ a {
 
 /* -------------------------------------------------------------------------------------------------------------- */
 
+#question-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid black;
+    padding: 20px;
+    max-width: 550px;
+    margin: 100px auto;
+    background: linear-gradient(to right, rgb(227, 203, 122), rgb(236, 126, 163));
+    border-radius: 10px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+}
+
+#ques_display {
+    font-size: 22px;
+    font-family: "Poppins", sans-serif;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
 .mcq-options {
-  margin: 5px;
-  padding: 8px 12px;
-  font-size: 16px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  background-color: #eee;
-  transition: background-color 0.3s ease;
+    display: inline-block;
+    margin: 5px 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-family: "Poppins", sans-serif;
+    border: 1px solid #333;
+    border-radius: 6px;
+    background-color: #eee;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-.correct {
-  background-color: #a6f1a6 !important; /* light green */
+.mcq-options:hover {
+    transform: scale(1.025);
+}
+.mcq-options:active {
+    transform: scale(0.97);
 }
 
-.wrong {
-  background-color: #f6a6a6 !important; /* light red */
+.mcq-options.selected {
+  background-color: lightblue;
 }
+
+#check-btn {
+    padding: 10px 25px;
+    font-size: 16px;
+    border: 2px solid wheat;
+    border-radius: 8px;
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(to left, rgb(233, 101, 123), orange);
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: all 0.2s ease;
+}
+
+#next-btn {
+    font-size: 20px;
+    border: none;
+    border-radius: 2px;
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(to right, rgb(123, 241, 123), rgb(111, 214, 249));
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: all 0.2s ease;
+}
+
+#check-btn:hover, #next-btn:hover {
+    transform: scale(1.005);
+}
+#check-btn:active, #next-btn:active {
+    transform: scale(0.97);
+}
+
+#check-btn:disabled {
+  color: #666;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.options-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; 
+    gap: 20px;
+    padding-top: 45px;
+}
+
+.nextDiv {
+    display: flex;
+    justify-content: center;
+}
+
+.feedbackDiv {
+    display: flex;
+    justify-content: center;
+    font-size: 22px;
+    font-family: "Poppins", sans-serif;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.fill-input {
+    margin-top: 50px;
+}
+
+.translation-text {
+    font-size: 14px; 
+    font-style: italic; 
+    color: #000000; 
+}
+
+#drag_drop_cont {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 25px;
+}
+
+.dragOptions, .dropOptions {
+    border: 2px solid black;
+}
+
+.dragOptions {
+    margin-bottom: 10px;
+    background-color: white;
+}
+
+.dropOptions {
+    transition: background-color 0.3s ease;
+}
+
+.dropzone_wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+#dropZone {
+    width: 175px;
+    height: 30px;
+    border: 2px dashed black;
+    display: flex;
+    align-items: centre;
+    justify-content: center;
+}
+
+

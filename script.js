@@ -1,4 +1,23 @@
+// array of question objects
 const questions = [
+    {
+        type : "dragdrop",
+        question : "Drag the English words on the left to match them with their correct Spanish meanings on the right :\n",
+        pairs : [
+            {left : "Hello", right : "Hola"},
+            {left : "Thank you", right : "Gracias"},
+            {left : "Goodbye", right : "Adiós"},
+            {left : "Good Morning", right : "Buen Día"}
+        ]
+    },
+
+    {
+        type : "fill",
+        question : 'Fill in the blank : "____, mi nombre es Marcus.\n"',
+        translation : 'Translation : "Hello, my name is Marcus."\n',
+        answer : "Hola"
+    },
+
     {
         type : "mcq",
         question : "How do you say 'Hello' in Spanish?\n",
@@ -7,151 +26,275 @@ const questions = [
     },
 
     {
-        type : "fill",
-        question : "_______ means 'Thank you' in Spanish.\n",
+        type : "mcq",
+        question : "What means 'Thank you' in Spanish?\n",
+        options : ["Lo siento", "Adiós", "Gracias", "Hola"],
         answer : "Gracias"
     },
 
     {
         type : "dragdrop",
-        question : "Match the following :\n",
+        question : "Match the following colour names :\n",
         pairs : [
-            {left : "Hello", right : "Hola"},
-            {left : "Thank you", right : "Gracias"},
-            {left : "Goodbye", right : "Adiós"},
-            {left : "Good Morning", right : "Buen Día"}
+            {left : "Red", right : "Roja"},
+            {left : "Blue", right : "Azul"},
+            {left : "Yellow", right : "Amarillo"},
+            {left : "Green", right : "Verde"}
         ]
-    }
+    },
+
+    {
+        type : "mcq",
+        question : "What does 'See you soon' translate to in Spanish?\n",
+        options : ["Cómo estás", "Nos vemos pronto", "De nada", "Buen día"],
+        answer : "Nos vemos pronto"
+    },
+
+    {
+        type : "fill",
+        question : "_____, nos vemos pronto.\n",
+        translation : "Goodbye, see you soon.\n",
+        answer : "Adios"
+    },
 ];
 
+//shuffling the questions
+let shuffledQuestions = [...questions]
+for (let i = shuffledQuestions.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledQuestions[i], shuffledQuestions[j]] = [shuffledQuestions[j], shuffledQuestions[i]];
+}
+
+//defining variables
 const container = document.getElementById("question-container");
 let ques_index = 0;
+let check_button = document.getElementById("check-btn");
 let next_button = document.getElementById("next-btn");
+let feedback = document.getElementById("feedback");
 
+//disabling the check button until user selects an answer
+check_button.disabled = true;
+//hiding the next button until user answers the current question
+next_button.style.display = "none";
+
+//function for mcq questions
 const mcq_ques = (curr_ques) => {
-    let ques_display = document.createElement("div");
-    ques_display.innerText = curr_ques.question;
-    container.appendChild(ques_display);
-    ques_display.classList.add("mcq-questions");
+
+    let ques_display = document.getElementById("ques_display");
+    ques_display.innerHTML = curr_ques.question;
+
+    let options_container = document.createElement("div");
+    options_container.classList.add("options-container");
+    ques_display.appendChild(options_container);
 
     curr_ques.options.forEach((option) => {
         let op = document.createElement("button");
         op.innerText = option;
-        ques_display.appendChild(op);
+        options_container.appendChild(op);
         op.classList.add("mcq-options");
 
-        op.addEventListener("click", () => {
-            const all_options = document.querySelectorAll(".mcq-options");
-            all_options.forEach((option) => {
-                option.disabled = true;
+        const all_options = document.querySelectorAll(".mcq-options");
+
+        //ensuring that only one option can be selected
+        all_options.forEach(btn => {
+            btn.addEventListener("click", () => {
+                all_options.forEach(b => {
+                    b.classList.remove("selected");
+                })
+                btn.classList.add("selected");
+
+                check_button.disabled = false;
             })
-            if(op.innerText === curr_ques.answer) {
-                op.classList.add("correct");
-            }
-            else {
-                op.classList.add("wrong");
-            }
         })
+    })
+
+    //check button function
+    check_button.addEventListener("click", () => {
+        const selected = document.querySelector(".mcq-options.selected");
+        if(selected.innerText === curr_ques.answer) {
+            feedback.innerText = "Correct Answer! ✅";
+        }
+        else {
+            feedback.innerHTML = `Wrong Answer ❌<br>The correct answer is <u>${curr_ques.answer}</u>`;
+        }
+        next_button.style.display = "";
+
+        //disabling the options and check button after user clicks check button once
+        check_button.disabled = true;
+        const all_options = document.querySelectorAll(".mcq-options");
+        all_options.forEach(btn => {
+            btn.disabled = true;
+        });
     })
 }
 
 const fill_ques = (curr_ques) => {
-    let ques_display = document.createElement("div");
-    ques_display.innerText = curr_ques.question;
-    container.appendChild(ques_display);
-    ques_display.classList.add("fill-questions");
+    let ques_display = document.getElementById("ques_display");
 
+    //creating a span for the translation text
+    ques_display.innerHTML = `${curr_ques.question}<br><span class="translation-text">${curr_ques.translation}</span><br>`;
+
+    //creating an input box for user to type answer
     let input = document.createElement("input");
     input.type = "text";
-    input.placeholder = "enter your answer";
+    input.placeholder = "Enter your answer";
     ques_display.appendChild(input);
+    input.classList.add("fill-input");
+    input.focus();
 
-    let checkBtn = document.createElement("button");
-    checkBtn.innerText = "Check Answer";
-    ques_display.appendChild(checkBtn);
+    //checks the input box and disables the check button if its empty
+    input.addEventListener("input", () => {
+        check_button.disabled = input.value.trim() === "";
+    });
 
-    checkBtn.addEventListener("click", () => {
+    check_button.addEventListener("click", () => {
         let userAnswer = input.value;
         if(userAnswer.toLowerCase() === curr_ques.answer.toLowerCase()) {
-            input.classList.add("correct");
+            feedback.innerText = "Correct Answer! ✅";
         }
         else {
-            input.classList.add("wrong");
+            feedback.innerHTML = `Wrong Answer ❌<br>The correct answer is <u>${curr_ques.answer}</u>`;
         }
-        checkBtn.disabled = true;
+
+        next_button.style.display = "";
         input.disabled = true;
+        check_button.disabled = true;
     })
 }
 
 const dragdrop_ques = (curr_ques) => {
-    let ques_display = document.createElement("div");
-    ques_display.innerText = curr_ques.question;
-    container.appendChild(ques_display);
-    ques_display.classList.add("dragdrop-questions");
 
-    let leftDiv = document.createElement("div");
-    let rightdiv = document.createElement("div");
-    leftDiv.classList.add("drag-items");
-    rightdiv.classList.add("drop-zones");
+    //displaying the question
+    let ques_display = document.getElementById("ques_display");
+    ques_display.innerHTML = curr_ques.question;
 
-    ques_display.appendChild(leftDiv);
-    ques_display.appendChild(rightdiv);
+    //creating 2 divs for drag and drop elements
+    let dragContainer = document.createElement("div")
+    let dropContainer = document.createElement("div");
+    dragContainer.classList.add("dragContainer");
+    dropContainer.classList.add("dropContainer");
 
-    let pairs = curr_ques.pairs.sort(() => Math.random() - 0.5);
+    //creating a container div and appending all created divs
+    let drag_drop_cont = document.createElement("div");
+    drag_drop_cont.id = "drag_drop_cont";
+    ques_display.appendChild(drag_drop_cont);
+    drag_drop_cont.appendChild(dragContainer);
+    drag_drop_cont.appendChild(dropContainer);
 
-    pairs.forEach(pair => {
-        let dragItem = document.createElement("div");
-        dragItem.innerText = pair.left;
-        dragItem.classList.add("drag-item");
-        dragItem.setAttribute("draggable", "true");
+    const leftItems = curr_ques.pairs.map(p => p.left);
+    const rightItems = curr_ques.pairs.map(p => p.right);
 
-        dragItem.addEventListener("dragstart", (e) => {
-            e.dataTransfer.setData("text/plain", pair.left);
-        })
-
-        leftDiv.appendChild(dragItem);
+    curr_ques.pairs.forEach(pair => {
+        //creating drag item
+        let drag = document.createElement("div");
+        drag.innerHTML = pair.left;
+        drag.classList.add("dragOptions");
+        drag.setAttribute("draggable", "true");
+        
+        drag.setAttribute("data-left", pair.left); //creating an attribute called data-left and assigning its value to pair.left
+        
+        drag.addEventListener("dragstart", (e) => {
+            e.dataTransfer.setData("text/plain", e.target.getAttribute("data-left"));
+        }) //adding an event listener to the drag item to transfer the text that it holds to the dropzone where the user drops it
+        
+        dragContainer.appendChild(drag);
     })
+    
+    curr_ques.pairs.forEach(pair => {
+        //wrapper div to hold dropzone and label
+        let wrapper = document.createElement("div");
+        wrapper.classList.add("dropzone_wrapper");
 
-    pairs.forEach(pair => {
+        //creating drop zone
         let dropZone = document.createElement("div");
-        dropZone.innerText = pair.right;
-        dropZone.classList.add("drop-zone");
+        dropZone.classList.add("dropOptions");
+        dropZone.setAttribute("data-right", pair.right);
+        dropZone.setAttribute("data-current", "");
+        dropZone.id = "dropZone";
 
+        //drop event handlers
         dropZone.addEventListener("dragover", (e) => {
             e.preventDefault();
         })
 
         dropZone.addEventListener("drop", (e) => {
             e.preventDefault();
-            const draggedText = e.dataTransfer.getData("text/plain");
+            const data = e.dataTransfer.getData("text/plain");
 
-            if(draggedText === pairs.find(p => p.right === dropZone.innerText).left) {
-                dropZone.classList.add("correct");
-                dropZone.innerText = `${draggedText} -> ${dropZone.innerText}`;
+            const draggedItem = document.querySelector(`[data-left = "${data}"]`);
 
-                dropZone.removeEventListener("drop", arguments.callee);
-
-                let draggableItems = leftDiv.querySelectorAll(".drag-item");
-                draggableItems.forEach(item => {
-                    if(item.innerText===draggedText) {
-                        item.setAttribute("draggable", "false");
-                        item.style.opacity = "0.5";
-                    }
-                })
+            //prevents dropping more than one item to a dropzone
+            if(e.target.children.length > 0) {
+                return;
             }
-            else {
-                dropZone.classList.add("wrong");
-                setTimeout(() => dropZone.classList.remove("wrong"), 1000);
+
+            const previousZone = draggedItem.parentElement;
+            if (previousZone.classList.contains("dropOptions") && previousZone!==e.target) {
+                previousZone.style.backgroundColor = "";
+                previousZone.innerHTML = "";
+            }
+
+            e.target.innerHTML = "";
+            e.target.appendChild(draggedItem);
+            e.target.style.backgroundColor = "white";
+            draggedItem.style.border = "none";
+            e.target.setAttribute("data-current", data);
+
+            let allFilled = true;
+            document.querySelectorAll(".dropOptions").forEach(dropzone => {
+                if(dropzone.children.length === 0) {
+                    allFilled = false;
+                }
+            })
+
+            if(allFilled) {
+                check_button.disabled = false;
             }
         })
 
-        rightdiv.appendChild(dropZone);
+        //labels for right side options
+        let label = document.createElement("div");
+        label.innerText = pair.right;
+        label.classList.add("label");
+
+        wrapper.appendChild(dropZone);
+        wrapper.appendChild(label);
+        dropContainer.appendChild(wrapper);
+
+        check_button.addEventListener("click", () => {
+            let score = 0;
+            let total = curr_ques.pairs.length;
+
+            const allDropZones = document.querySelectorAll(".dropOptions");
+
+            allDropZones.forEach(zone => {
+                let correct = zone.getAttribute("data-right");
+                let user = zone.getAttribute("data-current");
+
+                let correctPair = curr_ques.pairs.find(p => p.right === correct);
+
+                if(correctPair.left === user) {
+                    score++;
+                    zone.style.border = "2px solid green";
+                }
+                else {
+                    zone.style.border = "2px solid red";
+                }
+            })
+
+            feedback.innerText = `You got ${score} out of ${total} correct.`;
+            check_button.disabled = true;
+            next_button.style.display = "";
+        })
     })
+
 }
 
+
+//function to traverse the questions array
 function display_question() {
-    if(ques_index < questions.length) {
-        let curr_ques = questions[ques_index];
+    if(ques_index < shuffledQuestions.length) {
+        let curr_ques = shuffledQuestions[ques_index];
         if(curr_ques.type == "mcq") {
             mcq_ques(curr_ques);
         }
@@ -161,15 +304,20 @@ function display_question() {
         else if(curr_ques.type == "dragdrop") {
             dragdrop_ques(curr_ques);
         }
+        ques_index++;
     }
-    ques_index++;
+    else {
+        console.log("end of lesson");
+    }
 }
 
 display_question();
 
 next_button.addEventListener("click", () => {
-    container.innerHTML = "";
+    ques_display.innerHTML = "";
+    feedback.innerHTML = "";
     display_question();
+    next_button.style.display = "none";
 })
 
 
