@@ -135,7 +135,47 @@ button:hover {
 button:active {
     transform: scale(0.97);
 }
-
+/* -------------------------------------------------------------------------------------------------------------- */
+.content{
+    display:flex;
+    align-items: center;
+    justify-content:left;
+    gap:10 px;
+    
+    position:relative;
+    z-index:1;
+    padding:20px;
+    color:white;
+    text-align: center;
+    flex-wrap: wrap;
+}
+/* change language button */
+.change{
+    position:absolute;
+    height:30px;
+    width:150px;
+    margin: -170px 1170px;
+    cursor:pointer; 
+    text-align: center;
+    font-family:"Poppins", sans-serif;
+    color:White;
+    background: linear-gradient(to right, orange, rgb(233, 101, 123));
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    border:3px;
+} 
+.change:hover{
+  transform:scale(1.02);
+}
+.lottie-container {
+  width: 150px;
+  height: 150px;
+  display: inline-block;
+  vertical-align: baseline;
+  margin-right: 15px;
+}
+#book-animation {
+  transform: translateY(-4px); /* move up a little */
+}
 /* -------------------------------------------------------------------------------------------------------------- */
 
 .select-lang {
