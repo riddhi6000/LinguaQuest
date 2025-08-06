@@ -3,7 +3,7 @@
 
 /* background image */
 body {
-    background-image: url('background.png');
+    background-image: url('images/background.png');
     background-size: cover;
     position: relative;
     min-height: 100vh;
@@ -178,7 +178,9 @@ a {
     display: flex;
     justify-content: space-between;
 }
+
 /* -------------------------------------------------------------------------------------------------------------- */
+
 .content{
     display:flex;
     align-items: center;
@@ -219,6 +221,7 @@ a {
 #book-animation {
   transform: translateY(-4px); /* move up a little */
 }
+
 /* -------------------------------------------------------------------------------------------------------------- */
 
 .mcq-options {
