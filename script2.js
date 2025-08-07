@@ -4,57 +4,57 @@ const questions = [
         type : "dragdrop",
         question : "Drag the English words on the left to match them with their correct Spanish meanings on the right :\n",
         pairs : [
-            {left : "Hello", right : "Hola"},
-            {left : "Thank you", right : "Gracias"},
-            {left : "Goodbye", right : "Adiós"},
-            {left : "Good Morning", right : "Buen Día"}
+            {left : "Tea", right : "Té"},
+            {left : "Coffee", right : "Café"},
+            {left : "Water", right : "Agua"},
+            {left : "Juice", right : "Jugo"}
         ]
     },
 
     {
         type : "fill",
-        question : 'Fill in the blank : "____, mi nombre es Marcus.\n"',
-        translation : 'Translation : "Hello, my name is Marcus."\n',
-        answer : "Hola"
-    },
-
-    {
-        type : "mcq",
-        question : "How do you say 'Hello' in Spanish?\n",
-        options : ["Hola", "Aloha", "Hallo", "Bonjour"],
-        answer : "Hola"
-    },
-
-    {
-        type : "mcq",
-        question : "What means 'Thank you' in Spanish?\n",
-        options : ["Lo siento", "Adiós", "Gracias", "Hola"],
+        question : 'Fill in the blank : "_______ por el café.\n"',
+        translation : 'Translation : "Thank you for the coffee."\n',
         answer : "Gracias"
     },
 
     {
+        type : "mcq",
+        question : "How do you say 'Please' in Spanish?\n",
+        options : ["Pan", "Gracias", "Agua", "Por favor"],
+        answer : "Por favor"
+    },
+
+    {
+        type : "mcq",
+        question : "What means 'Water' in Spanish?\n",
+        options : ["Leche", "Pan", "Agua", "Jugo"],
+        answer : "Agua"
+    },
+
+    {
         type : "dragdrop",
-        question : "Match the following colour names :\n",
+        question : "Match the following English words to their correct Spanish meanings :\n",
         pairs : [
-            {left : "Red", right : "Roja"},
-            {left : "Blue", right : "Azul"},
-            {left : "Yellow", right : "Amarillo"},
-            {left : "Green", right : "Verde"}
+            {left : "Please", right : "Por favor"},
+            {left : "Thank you", right : "Gracias"},
+            {left : "Bread", right : "Pan"},
+            {left : "Milk", right : "Leche"}
         ]
     },
 
     {
         type : "mcq",
-        question : "What does 'See you soon' translate to in Spanish?\n",
-        options : ["Cómo estás", "Nos vemos pronto", "De nada", "Buen día"],
-        answer : "Nos vemos pronto"
+        question : "What does 'Té' mean?\n",
+        options : ["Water", "Milk", "Tea", "Coffee"],
+        answer : "Tea"
     },
 
     {
         type : "fill",
-        question : "_____, nos vemos pronto.\n",
-        translation : "Goodbye, see you soon.\n",
-        answer : "Adios"
+        question : "Leche y ___, por favor.\n",
+        translation : 'Translation : "Milk and bread, please."\n',
+        answer : "Pan"
     },
 ];
 
@@ -65,19 +65,30 @@ for (let i = shuffledQuestions.length - 1; i > 0; i--) {
     [shuffledQuestions[i], shuffledQuestions[j]] = [shuffledQuestions[j], shuffledQuestions[i]];
 }
 
+//audio
+const correctSound = new Audio("audio/correct.mp3");
+const wrongSound = new Audio("audio/wrong.mp3");
+
 //defining variables
 const container = document.getElementById("question-container");
 let ques_index = 0;
 let check_button = document.getElementById("check-btn");
 let next_button = document.getElementById("next-btn");
 let feedback = document.getElementById("feedback");
+let popup = document.getElementById("popup");
+popup.style.display = "none";
+let ques_count = 0;
+
+// function to show the popup after completing a lesson
+function showPopup() {
+  document.getElementById("popup").style.display = "";
+}
 
 //disabling the check button until user selects an answer
 check_button.disabled = true;
 //hiding the next button until user answers the current question
 next_button.style.display = "none";
 
-//function for mcq questions
 const mcq_ques = (curr_ques) => {
 
     let ques_display = document.getElementById("ques_display");
@@ -109,13 +120,21 @@ const mcq_ques = (curr_ques) => {
     })
 
     //check button function
-    check_button.addEventListener("click", () => {
+    check_button.onclick = () => {
         const selected = document.querySelector(".mcq-options.selected");
         if(selected.innerText === curr_ques.answer) {
             feedback.innerText = "Correct Answer! ✅";
+            correctSound.currentTime = 0;
+            correctSound.play();
         }
         else {
             feedback.innerHTML = `Wrong Answer ❌<br>The correct answer is <u>${curr_ques.answer}</u>`;
+            wrongSound.currentTime = 0;
+            wrongSound.play();
+        }
+
+        if(ques_count==questions.length) {
+            next_button.innerHTML = "Finish"
         }
         next_button.style.display = "";
 
@@ -125,7 +144,7 @@ const mcq_ques = (curr_ques) => {
         all_options.forEach(btn => {
             btn.disabled = true;
         });
-    })
+    }
 }
 
 const fill_ques = (curr_ques) => {
@@ -147,19 +166,27 @@ const fill_ques = (curr_ques) => {
         check_button.disabled = input.value.trim() === "";
     });
 
-    check_button.addEventListener("click", () => {
+    check_button.onclick = () => {
         let userAnswer = input.value;
         if(userAnswer.toLowerCase() === curr_ques.answer.toLowerCase()) {
             feedback.innerText = "Correct Answer! ✅";
+            correctSound.currentTime = 0;
+            correctSound.play();
         }
         else {
             feedback.innerHTML = `Wrong Answer ❌<br>The correct answer is <u>${curr_ques.answer}</u>`;
+            wrongSound.currentTime = 0;
+            wrongSound.play();
         }
 
+        if(ques_count==questions.length) {
+            next_button.innerHTML = "Finish"
+        }
+        
         next_button.style.display = "";
         input.disabled = true;
         check_button.disabled = true;
-    })
+    }
 }
 
 const dragdrop_ques = (curr_ques) => {
@@ -184,14 +211,23 @@ const dragdrop_ques = (curr_ques) => {
     const leftItems = curr_ques.pairs.map(p => p.left);
     const rightItems = curr_ques.pairs.map(p => p.right);
 
-    curr_ques.pairs.forEach(pair => {
+    const shuffle = (arr) => {
+        for (let i=arr.length-1; i>0; i--) {
+            const j = Math.floor(Math.random()*(i+1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+    }
+    shuffle(leftItems);
+    shuffle(rightItems);
+
+    leftItems.forEach(left => {
         //creating drag item
         let drag = document.createElement("div");
-        drag.innerHTML = pair.left;
+        drag.innerHTML = left;
         drag.classList.add("dragOptions");
         drag.setAttribute("draggable", "true");
         
-        drag.setAttribute("data-left", pair.left); //creating an attribute called data-left and assigning its value to pair.left
+        drag.setAttribute("data-left", left); //creating an attribute called data-left and assigning its value to pair.left
         
         drag.addEventListener("dragstart", (e) => {
             e.dataTransfer.setData("text/plain", e.target.getAttribute("data-left"));
@@ -200,7 +236,7 @@ const dragdrop_ques = (curr_ques) => {
         dragContainer.appendChild(drag);
     })
     
-    curr_ques.pairs.forEach(pair => {
+    rightItems.forEach(right => {
         //wrapper div to hold dropzone and label
         let wrapper = document.createElement("div");
         wrapper.classList.add("dropzone_wrapper");
@@ -208,7 +244,7 @@ const dragdrop_ques = (curr_ques) => {
         //creating drop zone
         let dropZone = document.createElement("div");
         dropZone.classList.add("dropOptions");
-        dropZone.setAttribute("data-right", pair.right);
+        dropZone.setAttribute("data-right", right);
         dropZone.setAttribute("data-current", "");
         dropZone.id = "dropZone";
 
@@ -254,45 +290,56 @@ const dragdrop_ques = (curr_ques) => {
 
         //labels for right side options
         let label = document.createElement("div");
-        label.innerText = pair.right;
+        label.innerText = right;
         label.classList.add("label");
 
         wrapper.appendChild(dropZone);
         wrapper.appendChild(label);
         dropContainer.appendChild(wrapper);
-
-        check_button.addEventListener("click", () => {
-            let score = 0;
-            let total = curr_ques.pairs.length;
-
-            const allDropZones = document.querySelectorAll(".dropOptions");
-
-            allDropZones.forEach(zone => {
-                let correct = zone.getAttribute("data-right");
-                let user = zone.getAttribute("data-current");
-
-                let correctPair = curr_ques.pairs.find(p => p.right === correct);
-
-                if(correctPair.left === user) {
-                    score++;
-                    zone.style.border = "2px solid green";
-                }
-                else {
-                    zone.style.border = "2px solid red";
-                }
-            })
-
-            feedback.innerText = `You got ${score} out of ${total} correct.`;
-            check_button.disabled = true;
-            next_button.style.display = "";
-        })
     })
 
-}
+    check_button.onclick = () => {
+        let score = 0;
+        let total = curr_ques.pairs.length;
 
+        const allDropZones = document.querySelectorAll(".dropOptions");
+
+        allDropZones.forEach(zone => {
+            let correct = zone.getAttribute("data-right");
+            let user = zone.getAttribute("data-current");
+
+            let correctPair = curr_ques.pairs.find(p => p.right === correct);
+
+            if(correctPair.left === user) {
+                score++;
+                zone.style.border = "2px solid green";
+            }
+            else {
+                zone.style.border = "2px solid red";
+            }
+        })
+        
+        if(score === total) {
+            correctSound.currentTime = 0;
+            correctSound.play();
+        } else {
+            wrongSound.currentTime = 0;
+            wrongSound.play();  
+        }
+
+        if(ques_count==questions.length) {
+            next_button.innerHTML = "Finish"
+        }
+
+        feedback.innerText = `You got ${score} out of ${total} correct.`;
+        check_button.disabled = true;
+        next_button.style.display = "";
+    }
+}
 
 //function to traverse the questions array
 function display_question() {
+    ques_count++;
     if(ques_index < shuffledQuestions.length) {
         let curr_ques = shuffledQuestions[ques_index];
         if(curr_ques.type == "mcq") {
@@ -314,10 +361,17 @@ function display_question() {
 display_question();
 
 next_button.addEventListener("click", () => {
-    ques_display.innerHTML = "";
-    feedback.innerHTML = "";
-    display_question();
-    next_button.style.display = "none";
+    if(ques_count==questions.length) {
+        showPopup();
+        correctSound.currentTime = 0;
+        correctSound.play();
+    }
+    else {
+        ques_display.innerHTML = "";
+        feedback.innerHTML = "";
+        display_question();
+        next_button.style.display = "none";
+    }
 })
 
 
