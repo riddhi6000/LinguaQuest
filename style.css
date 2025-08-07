@@ -237,6 +237,7 @@ a {
     border-radius: 10px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     margin-bottom: 20px;
+    margin-top: 45px;
 }
 
 #ques_display {
@@ -292,6 +293,7 @@ a {
     transition: all 0.2s ease;
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     transition: all 0.2s ease;
+    margin-bottom: 20px;
 }
 
 #check-btn:hover, #next-btn:hover {
@@ -376,6 +378,7 @@ a {
 }
 
 /*----------------------------------------------------------------------------------------------------------------*/
+
 #popup {
     position: fixed;
     top: 0;
@@ -420,4 +423,20 @@ a {
     transform: scale(0.97);
 }
 
+.xp_lives-cont {
+    display: flex;
+    justify-content: right;
+}
+
+#xp, #lives {
+    border: 2px solid black;
+    padding: 0 20px;
+    display: inline-flex;
+    font-size: 25px;
+    background-color: wheat;
+    font-family: "Poppins", sans-serif;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-bottom: 0;
+}
 

@@ -33,24 +33,6 @@ const questions = [
     },
 
     {
-        type : "dragdrop",
-        question : "Match the following colour names :\n",
-        pairs : [
-            {left : "Red", right : "Roja"},
-            {left : "Blue", right : "Azul"},
-            {left : "Yellow", right : "Amarillo"},
-            {left : "Green", right : "Verde"}
-        ]
-    },
-
-    {
-        type : "mcq",
-        question : "What does 'See you soon' translate to in Spanish?\n",
-        options : ["Cómo estás", "Nos vemos pronto", "De nada", "Buen día"],
-        answer : "Nos vemos pronto"
-    },
-
-    {
         type : "fill",
         question : "_____, nos vemos pronto.\n",
         translation : 'Translation : "Goodbye, see you soon."\n',
@@ -78,10 +60,32 @@ let feedback = document.getElementById("feedback");
 let popup = document.getElementById("popup");
 popup.style.display = "none";
 let ques_count = 0;
+let xp = 0;
+let lives = 3;
 
-// function to show the popup after completing a lesson
+// function to show the popup after completing a lesson or running out of lives
 function showPopup() {
   document.getElementById("popup").style.display = "";
+  if(!lives && ques_count!==questions.length) {
+    document.getElementById("popup-text").innerHTML = "Oh no you've ran out of lives! 💔<br>Better luck next time!"
+  }
+  else {
+    document.getElementById("main-popup-text").innerHTML = "🎉Lesson Complete!🎉"
+    document.getElementById("popup-text").innerHTML = `You finished all of the questions!<br>You earned <u>${xp} XP</u> points!`;
+  }
+}
+
+//function to show lives
+function showLives() {
+    if(lives===1) {
+        document.getElementById("lives").innerHTML = "Lives : ❤️🤍🤍";
+    }
+    else if(lives===2) {
+        document.getElementById("lives").innerHTML = "Lives : ❤️❤️🤍";
+    }
+    else {
+        document.getElementById("lives").innerHTML = "Lives : 🤍🤍🤍";
+    }
 }
 
 //disabling the check button until user selects an answer
@@ -123,12 +127,16 @@ const mcq_ques = (curr_ques) => {
     check_button.onclick = () => {
         const selected = document.querySelector(".mcq-options.selected");
         if(selected.innerText === curr_ques.answer) {
-            feedback.innerText = "Correct Answer! ✅";
+            feedback.innerText = "Correct Answer! ✅\nYou earned 10 XP points!";
+            xp += 10;
             correctSound.currentTime = 0;
             correctSound.play();
+            document.getElementById("xp").innerHTML = `XP : ${xp}`;
         }
         else {
             feedback.innerHTML = `Wrong Answer ❌<br>The correct answer is <u>${curr_ques.answer}</u>`;
+            lives--;
+            showLives();
             wrongSound.currentTime = 0;
             wrongSound.play();
         }
@@ -169,12 +177,16 @@ const fill_ques = (curr_ques) => {
     check_button.onclick = () => {
         let userAnswer = input.value;
         if(userAnswer.toLowerCase() === curr_ques.answer.toLowerCase()) {
-            feedback.innerText = "Correct Answer! ✅";
+            feedback.innerText = "Correct Answer! ✅\nYou earned 10 XP points!";
+            xp += 10;
+            document.getElementById("xp").innerHTML = `XP : ${xp}`;
             correctSound.currentTime = 0;
             correctSound.play();
         }
         else {
             feedback.innerHTML = `Wrong Answer ❌<br>The correct answer is <u>${curr_ques.answer}</u>`;
+            lives--;
+            showLives();
             wrongSound.currentTime = 0;
             wrongSound.play();
         }
@@ -331,7 +343,15 @@ const dragdrop_ques = (curr_ques) => {
             next_button.innerHTML = "Finish"
         }
 
-        feedback.innerText = `You got ${score} out of ${total} correct.`;
+        if(!score) {
+            lives--;
+            showLives();
+        }
+        else {
+            xp += (5*score);
+            document.getElementById("xp").innerHTML = `XP : ${xp}`;
+        }
+        feedback.innerText = `You got ${score} out of ${total} correct.\nYou earned ${5*score} XP points.`;
         check_button.disabled = true;
         next_button.style.display = "";
     }
@@ -361,16 +381,23 @@ function display_question() {
 display_question();
 
 next_button.addEventListener("click", () => {
-    if(ques_count==questions.length) {
+    if(!lives && ques_count!==questions.length) {
         showPopup();
-        correctSound.currentTime = 0;
-        correctSound.play();
+        wrongSound.currentTime = 0;
+        wrongSound.play();
     }
     else {
-        ques_display.innerHTML = "";
-        feedback.innerHTML = "";
-        display_question();
-        next_button.style.display = "none";
+        if(ques_count==questions.length) {
+            showPopup();
+            correctSound.currentTime = 0;
+            correctSound.play();
+        }
+        else {
+            ques_display.innerHTML = "";
+            feedback.innerHTML = "";
+            display_question();
+            next_button.style.display = "none";
+        }
     }
 })
 

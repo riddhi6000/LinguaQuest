@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="xp_lives-cont">
+        <div id="xp">XP : 0</div>
+        <div id="lives">Lives : ❤️❤️❤️</div>
+    </div>
+    
     <div id="question-container">
         <p id="ques_display"></p>
         <button id="check-btn">Check Answer</button>
@@ -21,8 +26,8 @@
     <!--lesson complete popup-->
     <div id="popup">
         <div class="popup-content">
-            <h1>🎉Lesson Complete!🎉</h1>
-            <p>You finished all the questions! Great job!</p>
+            <h1 id="main-popup-text"></h1>
+            <p id="popup-text"></p>
             <button id="popup_btn" onclick="location.href='spanish-lessons.html'">Back To Lessons</button>
         </div>
     </div>
