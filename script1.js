@@ -63,6 +63,9 @@ let ques_count = 0;
 let xp = 0;
 let lives = 3;
 
+//progress bar
+const progressBar = document.getElementById("progress");
+
 // function to show the popup after completing a lesson or running out of lives
 function showPopup() {
   document.getElementById("popup").style.display = "";
