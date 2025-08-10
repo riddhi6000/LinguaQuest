@@ -34,7 +34,7 @@ const questions = [
 
     {
         type : "fill",
-        question : "_____, nos vemos pronto.\n",
+        question :'Fill in the blank : "____,  nos vemos pronto.\n"',
         translation : 'Translation : "Goodbye, see you soon."\n',
         answer : "Adios"
     },
@@ -62,6 +62,8 @@ popup.style.display = "none";
 let ques_count = 0;
 let xp = 0;
 let lives = 3;
+let progress = document.getElementById("progress");
+progress.style.width = "0%";
 
 // function to show the popup after completing a lesson or running out of lives
 function showPopup() {
@@ -92,6 +94,27 @@ function showLives() {
 check_button.disabled = true;
 //hiding the next button until user answers the current question
 next_button.style.display = "none";
+
+function showProgress() {
+    if(ques_count==0) {
+        progress.style.width = "0%";
+    }
+    else if(ques_count==1) {
+        progress.style.width = "20%";
+    }
+    else if(ques_count==2) {
+        progress.style.width = "40%";
+    }
+    else if(ques_count==3) {
+        progress.style.width = "60%";
+    }
+    else if(ques_count==4) {
+        progress.style.width = "80%";
+    }
+    else {
+        progress.style.width = "100%";
+    }
+}
 
 const mcq_ques = (curr_ques) => {
 
@@ -152,6 +175,8 @@ const mcq_ques = (curr_ques) => {
         all_options.forEach(btn => {
             btn.disabled = true;
         });
+
+        showProgress();
     }
 }
 
@@ -198,6 +223,7 @@ const fill_ques = (curr_ques) => {
         next_button.style.display = "";
         input.disabled = true;
         check_button.disabled = true;
+        showProgress();
     }
 }
 
@@ -354,6 +380,7 @@ const dragdrop_ques = (curr_ques) => {
         feedback.innerText = `You got ${score} out of ${total} correct.\nYou earned ${5*score} XP points.`;
         check_button.disabled = true;
         next_button.style.display = "";
+        showProgress();
     }
 }
 
