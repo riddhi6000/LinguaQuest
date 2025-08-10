@@ -23,45 +23,34 @@
         .container{
             display:flex;
             flex-wrap: wrap;
-            padding: 10vh;
-            gap:20vh;
-            
-            
+            padding: 0 10vh;
+            gap:15vh;
         }
         .card{
-            background-color: #790404;
-            
+            background-color: wheat;
             height:50vh;
-            width:50vh; 
-            
-            border:0.5vh solid #690202;
+            width:45vh; 
+            border:0.5vh solid black;
             border-radius:1vh;
             padding: 3vh;
             box-shadow: 0 2vh 5vh rgba(0,0,0,0.3) ;
             text-align: center ;
             justify-content: center;
-            color: #FFF5E1;
-            transition: transform 0.3s ease;
+            color: black;
+            font-family:"Poppins", sans-serif;
             justify-items:center;
             position:relative;
-
-        
-        }
-        .card:hover{
-            transform:scale(1.03);
         }
         .lesson_image1{
            width: 25vh;
            height: 25vh;
            object-fit: contain;
-           
-          
+           border: 2px solid black;
         }
         .lesson_image2{
-            width:30vh;
-            height:30vh;
-            object-fit:contain;
-            
+            width:33vh;
+            height:25vh;
+            border: 2px solid black;
         }
         .lesson-text h2 {
             padding:1vh;
@@ -72,10 +61,11 @@
 
         .lesson-text p {
             padding:auto;
-            margin-left:1vh;
-            margin-top: 1vh;
+            margin: auto;
             font-size: x-large;
-}
+            padding-bottom: 1vh;
+        }
+
         .cardbutton{
             border-radius: 2vh;
             border: 1vh;
@@ -90,14 +80,31 @@
             text-align:center;
             font-size: large;
             font-family:"Poppins", sans-serif;
-            
+            border: 2px solid black;
+            transition: all 0.3s ease;
         }
+
         .cardbutton:hover{
             transform:scale(1.03);
         }
     </style>
 </head>
 <body>
+
+    <nav>
+        <div class="left">
+            <a href="index.html">
+                <img src="images/logo.png" alt="Logo" class="logo">
+            </a>
+            <a class="navelements icon" href="index.html">LinguaQuest</a>
+        </div>
+        <div class="right">
+            <a class="navelements" href="">About</a>
+            <a class="navelements" href="">Contact</a>
+            <a class="navelements" href="">Sign Up</a>
+        </div>
+    </nav>
+
     <div class="content">
         <div class="lottie-container" id="bookLottie"></div>
         <h1><b>Let the learning journey begin!</b></h1>

@@ -186,10 +186,8 @@ a {
     display:flex;
     align-items: center;
     justify-content:left;
-    gap:1vh;
     position:relative;
     z-index:1;
-    padding:3vh;
     color:white;
     text-align: center;
     flex-wrap: wrap;
@@ -199,7 +197,7 @@ a {
     position:absolute;
     height:5vh;
     width:25vh;
-    margin: -17vh 180vh;
+    margin: -23vh 192vh;
     cursor:pointer; 
     text-align: center;
     font-family:"Poppins", sans-serif;
@@ -207,6 +205,7 @@ a {
     background: linear-gradient(to right, orange, rgb(233, 101, 123));
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     border:3px;
+    transition: all 0.2s ease;
 } 
 .change:hover{
   transform:scale(1.02);
